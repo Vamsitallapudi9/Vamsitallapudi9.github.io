@@ -172,7 +172,7 @@ if (!window.gsap || reduce) {
   const heroWords = split($('.hero-tag'));
   const contactWords = split($('.contact-title'));
   $$('.section-title').forEach(t => {
-    gsap.from(split(t), { yPercent: 110, duration: 1.1, ease: 'expo.out', stagger: .06, scrollTrigger: { trigger: t, start: 'top 85%' } });
+    gsap.from(split(t), { yPercent: 110, duration: 1.1, ease: 'expo.out', stagger: .06, scrollTrigger: { trigger: t, start: 'top 98%' } });
   });
   gsap.from(contactWords, { yPercent: 110, rotate: 4, duration: 1.2, ease: 'expo.out', stagger: .08, scrollTrigger: { trigger: '.contact', start: 'top 70%' } });
 
@@ -181,8 +181,8 @@ if (!window.gsap || reduce) {
   gsap.set(['.hero-meta', '.nav', '.scroll-cue'], { opacity: 0 });
   const count = $('.loader-count'), c = { v: 0 };
   const intro = gsap.timeline({ paused: true })
-    .to(c, { v: 100, duration: 1.3, ease: 'power3.inOut', onUpdate: () => { count.textContent = Math.round(c.v); } })
-    .to('.loader', { yPercent: -100, duration: 1, ease: 'expo.inOut' })
+    .to(c, { v: 100, duration: .6, ease: 'power3.inOut', onUpdate: () => { count.textContent = Math.round(c.v); } })
+    .to('.loader', { yPercent: -100, duration: .8, ease: 'expo.inOut' })
     .add(() => hero.assemble(), '-=.7')
     .to(heroWords, { yPercent: 0, duration: 1.2, ease: 'expo.out', stagger: .035 }, '-=.2')
     .to(['.hero-meta', '.nav', '.scroll-cue'], { opacity: 1, duration: 1, stagger: .1 }, '<.3')
@@ -262,7 +262,6 @@ if (!window.gsap || reduce) {
   };
   if (fine) {
     $$('.section-title, .contact-title').forEach(el => wave(el, 10));
-    $$('.card, .project, .feature').forEach(el => wave($('h3', el), 16, el));
     $$('.nav-links a, .contact-links a').forEach(el => wave(el, 22));
     wave($('.contact-mail'), 18);
     // cursor glow in the ambient background
