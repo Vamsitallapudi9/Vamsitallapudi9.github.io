@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vamsi Tallapudi · Applied AI Engineer</title>
+  <meta name="description" content="Applied AI Engineer at Sanofi. I build LLM systems for clinical trials: RAG, document extraction and LLM evaluation.">
+  <meta property="og:title" content="Vamsi Tallapudi, Applied AI Engineer">
+  <meta property="og:description" content="LLM systems for clinical trials that show their sources.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230A6C74'/><text x='16' y='22' font-family='sans-serif' font-size='16' font-weight='700' fill='white' text-anchor='middle'>VT</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <div class="shell">
+    <header class="side">
+      <a class="name" href="#top">Vamsi Tallapudi</a>
+      <p class="role">Applied AI Engineer, Sanofi</p>
+      <nav aria-label="Sections">
+        <ul>
+          <li><a href="#top">About</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#research">Research</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#education">Education</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <span class="nav-marker" aria-hidden="true"></span>
+      </nav>
+      <ul class="side-links">
+        <li><a href="https://www.linkedin.com/in/vamsitallapudi" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://github.com/Vamsitallapudi9" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="Vamsi_tallapudi.pdf" download>Résumé (PDF)</a></li>
+      </ul>
+    </header>
+
+    <main id="main">
+      <section id="top" class="hero" aria-labelledby="hero-title">
+        <h1 id="hero-title" class="reveal">I build LLM systems for clinical trials that show their sources.</h1>
+        <p class="claims reveal">
+          Safety narratives that took two hours now draft in two <span class="nw">minutes<a class="cite" href="#c-narratives" aria-describedby="t1">1<span class="tip" id="t1" role="tooltip">Bristol-Myers Squibb, 2024–2026</span></a>.</span>
+          Protocol PDFs become structured visit schedules at ~85% field <span class="nw">accuracy<a class="cite" href="#c-protocol" aria-describedby="t2">2<span class="tip" id="t2" role="tooltip">Sanofi, 2026</span></a>.</span>
+          Site risk scores trace back to the data behind <span class="nw">them<a class="cite" href="#c-compass" aria-describedby="t3">3<span class="tip" id="t3" role="tooltip">Sanofi, Compass</span></a>.</span>
+          And a benchmark of 22 models on clinical reasoning is under review at EACL <span class="nw">2027<a class="cite" href="#research" aria-describedby="t4">4<span class="tip" id="t4" role="tooltip">ClinTrialBench, co-author</span></a>.</span>
+        </p>
+        <p class="lede reveal">Applied AI Engineer in Hyderabad with 4+ years of experience, 2.5 of them shipping LLM applications at Bristol-Myers Squibb and Sanofi. I work on RAG, document extraction, LLM evaluation and the Python/SQL pipelines behind them, on AWS and Azure.</p>
+        <div class="actions reveal">
+          <a class="btn primary" href="mailto:vamsii.tallapudi@gmail.com">Email me</a>
+          <a class="btn" href="Vamsi_tallapudi.pdf" download>Download résumé</a>
+        </div>
+      </section>
+
+      <section id="experience" aria-labelledby="exp-title">
+        <h2 id="exp-title">Experience</h2>
+        <ol class="timeline">
+          <li class="job">
+            <div class="job-head">
+              <h3>Software Engineering Expert, Digital R&amp;D <span class="org">Sanofi</span></h3>
+              <p class="meta"><time>Feb 2026</time> – Present, Hyderabad</p>
+            </div>
+            <ul>
+              <li id="c-compass"><strong>Compass.</strong> A Python and React app that scores clinical trial sites on risk and workload using statistical models on clinical and operational data. Every score links back to the data behind it, and an LLM drafts visit-prep notes for monitors. Built to replace a vendor platform, with a savings target of ~€10M.</li>
+              <li id="c-protocol"><strong>Protocol extraction.</strong> Prototyped a pipeline that turns protocol PDFs into structured JSON visit-by-assessment schedules using PDFPlumber, Markdown conversion and Claude. A Gemini LLM-as-judge evaluation on ~30 protocols puts field-level accuracy at ~85%.</li>
+              <li><strong>Interpretability.</strong> Led a proof of concept applying sparse autoencoders to GPT-2 and Microsoft BioGPT activations to study how the models represent biomedical concepts.</li>
+            </ul>
+          </li>
+          <li class="job">
+            <div class="job-head">
+              <h3>Software Engineer II, Applied AI <span class="org">Bristol-Myers Squibb</span></h3>
+              <p class="meta"><time>May 2024</time> – <time>Jan 2026</time>, Hyderabad</p>
+            </div>
+            <ul>
+              <li id="c-narratives"><strong>Safety narratives.</strong> A GenAI platform that writes first drafts of clinical safety narratives for medical writers, using RAG over patient data, structured outputs, validation checks and citations back to source. Drafting time went from ~2 hours to ~2 minutes per narrative, replacing the eNarrator vendor tool and saving an estimated ~$450K a year.</li>
+              <li>Built the data pipeline behind it: adverse event, lab, disposition, EDC and tracking data joined into 3M+ patient-level rows and converted to LLM-ready Markdown in AWS S3, across 50+ studies of 1,000–10,000+ patients each.</li>
+              <li><strong>Protocol Amendment Analyzer.</strong> A Python tool that parses DOCX/XML protocol versions, finds what changed and summarizes it with GPT-4.1. 90%+ accuracy against SME review, saving ~60 review hours a week across 25–40 protocols a month.</li>
+              <li>ETL pipelines for Global Product Supply that pull 15+ datasets (deviations, compliance findings, CAPA plans, audits) from Redshift and Impala. A single deviation can involve ~1.5M records; data prep per deviation dropped to 1–2 minutes.</li>
+              <li>Replaced legacy John Snow Labs NER models with Gemini and OpenAI extraction of ICD-10, ICD-11, procedure and drug codes from 100+ protocols, automating document generation for Trial Optimization and Central Monitoring (~$30K a year).</li>
+              <li>Ran data ingestion and quality checks for 600+ study protocols and validated 4 Tableau dashboards for Study Operations and Assessment Planning.</li>
+            </ul>
+          </li>
+          <li class="job">
+            <div class="job-head">
+              <h3>Senior Systems Engineer <span class="org">Cognizant Technology Solutions</span></h3>
+              <p class="meta"><time>Jul 2022</time> – <time>Apr 2024</time>, Bangalore</p>
+            </div>
+            <ul>
+              <li>Python and SQL scripts for Medidata that run daily data quality checks on Rave EDC eCRF entries, flagging wrong values and late entries across up to 10K records a day. Checking time fell from ~2–3 hours to ~15 minutes a day.</li>
+              <li>Applied ML classification to tag records by category before they went into reports.</li>
+              <li>Debugged failing data jobs and presented results to stakeholders on Agile and Waterfall projects.</li>
+            </ul>
+          </li>
+        </ol>
+      </section>
+
+      <section id="research" aria-labelledby="res-title">
+        <h2 id="res-title">Research</h2>
+        <article class="paper">
+          <h3>ClinTrialBench</h3>
+          <p class="meta">Co-author, under review at EACL 2027 (ACL Rolling Review)</p>
+          <p>A suite of three benchmarks for clinical trial and pharma quality tasks. I evaluated 22 models from OpenAI, Anthropic, Google and DeepSeek through LiteLLM, with and without reasoning modes. No single model led on all three.</p>
+          <dl class="benches">
+            <div>
+              <dt>SeverityBench <span class="mine">Built by me</span></dt>
+              <dd>The model labels FDA-style inspection findings as Minor, Major or Critical and must cite the facts behind the label. Scored on accuracy, quadratic weighted kappa and evidence quality.</dd>
+            </div>
+            <div>
+              <dt>CapaBench <span class="mine">Built by me</span></dt>
+              <dd>From a deviation narrative, the model lists the facts, finds the systemic root cause and writes corrective and preventive actions. Each part is graded by an LLM judge with precision, recall and F1.</dd>
+            </div>
+            <div>
+              <dt>SiteMonBench</dt>
+              <dd>The third benchmark in the suite, built by my co-authors.</dd>
+            </div>
+          </dl>
+        </article>
+      </section>
+
+      <section id="skills" aria-labelledby="skills-title">
+        <h2 id="skills-title">Skills</h2>
+        <dl class="skills">
+          <div><dt>LLMs and GenAI</dt><dd>Claude, GPT, Gemini, DeepSeek, AWS Bedrock, RAG, prompt engineering, structured outputs, tool calling, agentic workflows, MCP, LiteLLM, LangChain, LangGraph, PydanticAI</dd></div>
+          <div><dt>Evaluation</dt><dd>LLM-as-judge, human/SME evaluation, benchmark design, hallucination checks, precision/recall/F1, quadratic weighted kappa, LangSmith</dd></div>
+          <div><dt>NLP and ML</dt><dd>NER, information extraction, embeddings, semantic and hybrid search, FAISS, Sentence Transformers, Hugging Face Transformers, PyTorch, sparse autoencoders, BioGPT</dd></div>
+          <div><dt>Data engineering</dt><dd>Python, SQL, Bash, ETL, Pandas, NumPy, PostgreSQL, MySQL, MongoDB, Redshift, Impala, Parquet, Arrow</dd></div>
+          <div><dt>Backend and cloud</dt><dd>REST APIs, React, Docker, AWS (S3, Bedrock), Azure Functions, GitHub Actions, CI/CD, Linux</dd></div>
+          <div><dt>Visualization</dt><dd>Streamlit, Tableau, Power BI, Excel</dd></div>
+          <div><dt>Domain</dt><dd>Clinical trials, Medidata Rave EDC, eCRF data quality, safety narratives, protocol documents, FDA / ICH / 21 CFR, GxP, deviation management, CAPA, root cause analysis, ICD-10/11 coding</dd></div>
+        </dl>
+      </section>
+
+      <section id="education" aria-labelledby="edu-title">
+        <h2 id="edu-title">Education</h2>
+        <ul class="plain">
+          <li><span><strong>M.Tech, Artificial Intelligence and Data Science</strong><br>KIET, Kakinada (work-integrated program)</span><span class="meta">2022 – 2024</span></li>
+          <li><span><strong>B.Tech, Electrical and Electronics Engineering</strong><br>Aditya University, Surampalem</span><span class="meta">2018 – 2021</span></li>
+          <li><span><strong>Diploma, Electrical and Electronics Engineering</strong><br>APT, Anaparthi</span><span class="meta">2015 – 2018</span></li>
+        </ul>
+        <h3 class="sub">Certifications</h3>
+        <ul class="plain">
+          <li><span><strong>IBM Data Science Professional Certificate</strong><br>Innomatics Research Labs</span></li>
+          <li><span><strong>IBM Data Engineering Professional Certificate</strong><br>Coursera</span></li>
+        </ul>
+      </section>
+
+      <section id="contact" class="contact" aria-labelledby="contact-title">
+        <h2 id="contact-title">Contact</h2>
+        <p>Working on LLMs in healthcare or life sciences? I'm happy to talk.</p>
+        <a class="mail" href="mailto:vamsii.tallapudi@gmail.com">vamsii.tallapudi@gmail.com</a>
+        <ul class="inline-links">
+          <li><a href="https://www.linkedin.com/in/vamsitallapudi" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://github.com/Vamsitallapudi9" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="Vamsi_tallapudi.pdf" download>Résumé (PDF)</a></li>
+        </ul>
+      </section>
+
+      <footer>© <span id="year">2026</span> V S C D P Prasad Tallapudi</footer>
+    </main>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
