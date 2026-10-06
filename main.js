@@ -29,7 +29,9 @@ const hero = (() => {
   const canvas = $('.hero-canvas');
   const ctx = canvas.getContext('2d');
   const css = getComputedStyle(document.documentElement);
-  const ink = css.getPropertyValue('--ink').trim(), amber = css.getPropertyValue('--amber').trim();
+  let ink, amber;
+  const readColors = () => { const css = getComputedStyle(document.documentElement); ink = css.getPropertyValue('--ink').trim(); amber = css.getPropertyValue('--amber').trim(); };
+  readColors();
   let w, h, parts = [], pull = reduce ? 1 : 0, scatter = 0, visible = true;
   const mouse = { x: -1e4, y: -1e4 };
 
@@ -68,6 +70,7 @@ const hero = (() => {
         s: gap * (.45 + Math.random() * .35),
         amber: Math.random() < .1,
         drift: Math.random() * Math.PI * 2,
+        g: 0,
       });
     }
     if (reduce) parts.forEach(p => { p.x = p.tx; p.y = p.ty; });
@@ -82,16 +85,17 @@ const hero = (() => {
         // before assembly particles wander like noise
         p.vx += ((gx - p.x) * k * pull) + Math.cos(t * .0006 + p.drift) * .06 * (1 - pull);
         p.vy += ((gy - p.y) * k * pull) + Math.sin(t * .0007 + p.drift) * .06 * (1 - pull);
+        // lens: dots near the cursor swell and take the accent colour, without moving
         const dx = p.x - mouse.x, dy = p.y - mouse.y, d2 = dx * dx + dy * dy;
-        if (d2 < 12000) { const f = (12000 - d2) / 12000 * 3.2; const d = Math.sqrt(d2) || 1; p.vx += dx / d * f; p.vy += dy / d * f; }
+        p.g += ((d2 < 10000 ? 1 - d2 / 10000 : 0) - p.g) * .18;
         p.vx *= .84; p.vy *= .84;
         p.x += p.vx; p.y += p.vy;
       }
       ctx.globalAlpha = 1 - scatter * .9;
       ctx.fillStyle = ink;
-      for (const p of parts) if (!p.amber) ctx.fillRect(p.x, p.y, p.s, p.s);
+      for (const p of parts) if (!p.amber && p.g < .05) ctx.fillRect(p.x, p.y, p.s, p.s);
       ctx.fillStyle = amber;
-      for (const p of parts) if (p.amber) ctx.fillRect(p.x, p.y, p.s, p.s);
+      for (const p of parts) if (p.amber || p.g >= .05) { const z = p.s * (1 + p.g * 1.3), o = (z - p.s) / 2; ctx.fillRect(p.x - o, p.y - o, z, z); }
     }
     if (!reduce) requestAnimationFrame(frame);
   }
@@ -113,10 +117,23 @@ const hero = (() => {
     },
     assemble() { if (window.gsap) gsap.to({ v: 0 }, { v: 1, duration: 2.4, ease: 'power2.inOut', onUpdate() { pull = this.targets()[0].v; } }); else pull = 1; },
     setScatter(v) { scatter = v; },
+    recolor() { readColors(); if (reduce) frame(0); },
   };
 })();
 
 const ready = hero.init();
+
+// Theme toggle (initial theme is set in <head> to avoid a flash)
+const themeBtn = $('.theme-btn');
+const syncThemeBtn = () => themeBtn.setAttribute('aria-label', `Switch to ${document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'} theme`);
+syncThemeBtn();
+themeBtn.addEventListener('click', () => {
+  const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem('theme', next); } catch (e) {}
+  syncThemeBtn();
+  hero.recolor();
+});
 
 /* ---------- Everything below needs GSAP; without it the page stays fully readable ---------- */
 if (!window.gsap || reduce) {
@@ -266,28 +283,26 @@ if (!window.gsap || reduce) {
     document.addEventListener('pointerover', e => cur.classList.toggle('is-hover', !!e.target.closest('a, button, .card')));
   }
 
-  // Kinetic hover: letters burst apart and spring back
-  const kinetic = (el, force = 1, trigger = el) => {
+  // Hover: letters lift in a quick wave, left to right, and settle
+  const wave = (el, lift = 16, trigger = el) => {
     const cs = splitChars(el);
-    let tl;
+    let tw;
     trigger.addEventListener('pointerenter', () => {
-      tl?.kill();
-      tl = gsap.timeline()
-        .to(cs, {
-          x: () => gsap.utils.random(-12, 12) * force,
-          y: () => gsap.utils.random(-14, 10) * force,
-          rotate: () => gsap.utils.random(-30, 30) * force,
-          duration: .28, ease: 'power3.out', stagger: { each: .008, from: 'random' },
-        })
-        .to(cs, { x: 0, y: 0, rotate: 0, duration: .9, ease: 'elastic.out(1, .4)', stagger: { each: .008, from: 'random' } });
+      if (tw?.isActive()) return;
+      tw = gsap.to(cs, { yPercent: -lift, duration: .22, ease: 'power2.out', yoyo: true, repeat: 1, stagger: .016 });
     });
   };
   if (fine) {
-    $$('.section-title, .contact-title').forEach(el => kinetic(el));
-    $$('.interest h3, .bench h4, .role h3').forEach(el => kinetic(el, .7));
-    $$('.card, .project').forEach(el => kinetic($('h3', el), .8, el));
-    $$('.nav-links a, .contact-links a').forEach(el => kinetic(el, .5));
-    kinetic($('.contact-mail'), .6);
+    $$('.section-title, .contact-title').forEach(el => wave(el, 10));
+    $$('.interest h3, .bench h4, .role h3').forEach(el => wave(el));
+    $$('.card, .project').forEach(el => wave($('h3', el), 16, el));
+    $$('.nav-links a, .contact-links a').forEach(el => wave(el, 22));
+    wave($('.contact-mail'), 18);
+    // cursor glow in the ambient background
+    addEventListener('pointermove', e => {
+      document.documentElement.style.setProperty('--cx', e.clientX + 'px');
+      document.documentElement.style.setProperty('--cy', e.clientY + 'px');
+    });
   }
 
   addEventListener('load', () => ScrollTrigger.refresh());
