@@ -18,6 +18,6 @@ Static site (HTML/CSS/JS, no build step). Every push to `main` deploys to GitHub
 
 ## Updating
 
-Edit `index.html`, push to `main`. To update the résumé, replace `Vamsi_tallapudi.pdf` (keep the name).
+Edit `index.html`, push to `main`. For a new project page, copy `projects/evidence-compiler.html`, swap the content, put screenshots in `img/`, and link it from a card in `index.html`. To update the résumé, replace `Vamsi_tallapudi.pdf` (keep the name).
 
 Preview locally: `python3 -m http.server` then open http://localhost:8000.

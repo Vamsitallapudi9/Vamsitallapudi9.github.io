@@ -326,3 +326,67 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 }
 
 @media (hover: none) { .feature-shot figcaption { display: none; } }
+
+/* ---------- Project pages ---------- */
+.page .back { margin-left: auto; font-size: .95rem; color: var(--muted); transition: color .3s; }
+.page .back:hover { color: var(--ink); }
+.page .theme-btn { margin-left: .5rem; }
+@media (max-width: 960px) { .page .theme-btn { margin-left: .5rem; } }
+.pp { max-width: 56rem; margin: 0 auto; padding: 8rem var(--pad) 0; }
+.pp h1 { font-size: clamp(2.6rem, 6vw, 4.5rem); font-weight: 500; letter-spacing: -.04em; line-height: 1; margin-top: 1.25rem; }
+.pp h2 { font-size: clamp(1.5rem, 2.6vw, 2rem); font-weight: 500; letter-spacing: -.025em; margin-bottom: 1.25rem; }
+.pp-pills { display: flex; flex-wrap: wrap; gap: .4rem; list-style: none; margin: 0; padding: 0; }
+.pp-pills li { font-size: .8rem; padding: .25rem .7rem; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); background: var(--bg-2); }
+.pp-pills li:first-child { color: var(--amber); border-color: color-mix(in srgb, var(--amber) 40%, transparent); }
+.pp-tagline { font-size: clamp(1.25rem, 2.4vw, 1.6rem); color: var(--amber); margin-top: .5rem; }
+.pp-lede { font-size: 1.15rem; color: var(--muted); max-width: 42rem; margin-top: 1.25rem; }
+.pp-shot, .pp-gallery figure { margin: 0; }
+.pp-shot { margin: 3.5rem 0 0; }
+.pp-shot img, .pp-gallery img { display: block; width: 100%; height: auto; border-radius: 16px; border: 1px solid var(--line); box-shadow: 0 30px 60px -40px rgba(0, 0, 0, .45); background: #fff; }
+.pp figcaption { font-size: .88rem; color: var(--muted); margin-top: .7rem; }
+.pp-block { padding: clamp(3.5rem, 8vh, 5rem) 0 0; }
+.pp-prose { display: grid; gap: 1rem; max-width: 42rem; font-size: 1.08rem; }
+.pp-prose p:first-child { color: var(--ink); }
+.pp-prose p + p { color: var(--muted); }
+.pp-note { color: var(--muted); margin: -.5rem 0 1.5rem; }
+
+.pp-rule { margin-top: clamp(3.5rem, 8vh, 5rem); padding: clamp(2rem, 5vw, 3rem); border-radius: 24px; background: var(--bg-2); border: 1px solid var(--line); }
+.pp-rule-k { font-size: .9rem; color: var(--muted); }
+.pp-rule-q { font-size: clamp(1.7rem, 4vw, 2.75rem); font-weight: 500; letter-spacing: -.03em; line-height: 1.1; margin: .5rem 0 1rem; }
+.pp-rule-s { color: var(--muted); max-width: 40rem; }
+
+.pp-types, .pp-uses { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+.pp-types li, .pp-uses li { display: flex; flex-direction: column; gap: .35rem; padding: 1.25rem 1.4rem; border-radius: 16px; background: var(--bg-2); border: 1px solid var(--line); transition: transform .5s var(--ease), border-color .3s; }
+.pp-types li:hover, .pp-uses li:hover { transform: translateY(-3px); }
+.pp-types li { border-left: 3px solid currentColor; }
+.pp-types li.ct-u { border-left-style: dashed; }
+.pp-types b { font-weight: 600; }
+.pp-types span, .pp-uses span { color: var(--muted); font-size: .95rem; }
+.pp-uses b { font-weight: 500; font-size: 1.1rem; }
+
+.pp-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: .75rem; counter-reset: s; }
+.pp-steps li { counter-increment: s; position: relative; display: flex; flex-direction: column; gap: .3rem; padding: 1rem .9rem; border-radius: 14px; background: var(--bg-2); border: 1px solid var(--line); border-top: 3px solid var(--sc); }
+.pp-steps li::before { content: counter(s); font-size: .75rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.pp-steps b { font-weight: 600; }
+.pp-steps span { font-size: .88rem; color: var(--muted); line-height: 1.35; }
+.pp-steps .m, .pp-legend .m { --sc: var(--amber); }
+.pp-steps .c, .pp-legend .c { --sc: #149C7E; }
+.pp-legend { display: flex; gap: 1.25rem; margin-top: .9rem; font-size: .85rem; color: var(--muted); }
+.pp-legend span::before { content: ""; display: inline-block; width: .75rem; height: 3px; border-radius: 2px; background: var(--sc); margin-right: .45rem; vertical-align: middle; }
+
+.pp .chips { margin-bottom: 2rem; }
+.pp-gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+.pp-gallery figure:first-child { grid-column: 1 / -1; }
+.pp-proof { margin-top: 2rem; }
+.pp-contact { padding-left: 0; padding-right: 0; }
+.pp .contact-title { font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 400; letter-spacing: -.045em; margin: 1rem 0 2rem; }
+
+/* home card links to the project page */
+.feature { position: relative; }
+.feature h3 a::after { content: ""; position: absolute; inset: 0; z-index: 2; border-radius: inherit; }
+.feature .feature-cta a { position: relative; z-index: 3; }
+
+@media (max-width: 960px) {
+  .pp-steps { grid-template-columns: repeat(2, 1fr); }
+  .pp-types, .pp-uses, .pp-gallery { grid-template-columns: 1fr; }
+}
