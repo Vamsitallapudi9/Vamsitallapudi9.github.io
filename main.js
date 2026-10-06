@@ -28,7 +28,8 @@ addEventListener('keydown', e => { if (e.key === 'Escape' && !menu.hidden) { set
 const hero = (() => {
   const canvas = $('.hero-canvas');
   const ctx = canvas.getContext('2d');
-  const ink = '#EAF0F6', amber = '#FFC978';
+  const css = getComputedStyle(document.documentElement);
+  const ink = css.getPropertyValue('--ink').trim(), amber = css.getPropertyValue('--amber').trim();
   let w, h, parts = [], pull = reduce ? 1 : 0, scatter = 0, visible = true;
   const mouse = { x: -1e4, y: -1e4 };
 
@@ -137,10 +138,19 @@ if (!window.gsap || reduce) {
     lenis.scrollTo(target, { duration: 1.4 });
   }));
 
-  // Split text into masked words
+  // Split text into masked words made of individual letters (letters drive the hover scatter)
+  const chars = w => [...w].map(c => `<span class="ch">${c}</span>`).join('');
   const split = el => {
-    el.innerHTML = el.textContent.trim().split(/\s+/).map(w => `<span class="word"><span>${w}</span></span>`).join(' ');
+    el.setAttribute('aria-label', el.textContent.trim());
+    el.innerHTML = el.textContent.trim().split(/\s+/).map(w => `<span class="word" aria-hidden="true"><span>${chars(w)}</span></span>`).join(' ');
     return $$('.word > span', el);
+  };
+  const splitChars = el => {
+    if (!el.querySelector('.ch')) {
+      el.setAttribute('aria-label', el.textContent.trim());
+      el.innerHTML = el.textContent.trim().split(/\s+/).map(w => `<span style="display:inline-block" aria-hidden="true">${chars(w)}</span>`).join(' ');
+    }
+    return $$('.ch', el);
   };
   const heroWords = split($('.hero-tag'));
   const contactWords = split($('.contact-title'));
@@ -254,6 +264,30 @@ if (!window.gsap || reduce) {
     const rx2 = gsap.quickTo('.cursor-ring', 'x', { duration: .5, ease: 'power3' }), ry2 = gsap.quickTo('.cursor-ring', 'y', { duration: .5, ease: 'power3' });
     addEventListener('pointermove', e => { dx(e.clientX); dy(e.clientY); rx2(e.clientX); ry2(e.clientY); });
     document.addEventListener('pointerover', e => cur.classList.toggle('is-hover', !!e.target.closest('a, button, .card')));
+  }
+
+  // Kinetic hover: letters burst apart and spring back
+  const kinetic = (el, force = 1, trigger = el) => {
+    const cs = splitChars(el);
+    let tl;
+    trigger.addEventListener('pointerenter', () => {
+      tl?.kill();
+      tl = gsap.timeline()
+        .to(cs, {
+          x: () => gsap.utils.random(-12, 12) * force,
+          y: () => gsap.utils.random(-14, 10) * force,
+          rotate: () => gsap.utils.random(-30, 30) * force,
+          duration: .28, ease: 'power3.out', stagger: { each: .008, from: 'random' },
+        })
+        .to(cs, { x: 0, y: 0, rotate: 0, duration: .9, ease: 'elastic.out(1, .4)', stagger: { each: .008, from: 'random' } });
+    });
+  };
+  if (fine) {
+    $$('.section-title, .contact-title').forEach(el => kinetic(el));
+    $$('.interest h3, .bench h4, .role h3').forEach(el => kinetic(el, .7));
+    $$('.card, .project').forEach(el => kinetic($('h3', el), .8, el));
+    $$('.nav-links a, .contact-links a').forEach(el => kinetic(el, .5));
+    kinetic($('.contact-mail'), .6);
   }
 
   addEventListener('load', () => ScrollTrigger.refresh());
