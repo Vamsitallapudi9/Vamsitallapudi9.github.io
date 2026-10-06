@@ -197,16 +197,8 @@ if (!window.gsap || reduce) {
     },
   });
 
-  // Counters
-  $$('.stat-num').forEach(el => {
-    const o = { v: 0 }, to = +el.dataset.to, pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
-    gsap.to(o, {
-      v: to, duration: 2, ease: 'expo.out',
-      onUpdate: () => { el.textContent = pre + Math.round(o.v) + suf; },
-      scrollTrigger: { trigger: el, start: 'top 88%', once: true },
-    });
-  });
-  gsap.from('.stat', { y: 40, opacity: 0, stagger: .1, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: '.numbers', start: 'top 80%' } });
+  gsap.from('.interest', { y: 40, opacity: 0, stagger: .1, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: '.interests', start: 'top 80%' } });
+  gsap.from('.project', { y: 60, opacity: 0, stagger: .1, duration: 1.1, ease: 'expo.out', scrollTrigger: { trigger: '.project-grid', start: 'top 85%' } });
 
   // Pinned horizontal project reel on wide screens
   const mm = gsap.matchMedia();
